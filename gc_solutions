@@ -5,3 +5,12 @@
 ##Given: At most 10 DNA strings in FASTA format (of length at most 1 kbp each).
 ##Return: The ID of the string having the highest GC-content, followed by the GC-content of that string. Rosalind allows for a default error of 0.001 in all decimal answers unless otherwise stated; please see the note on absolute error below.
 
+def gc_content(fastas):
+    all_fastas = []
+    for seq in fastas:
+        gc_content = []
+        for base in seq:
+            if base is 'G' or 'C':
+                gc_content += gc_content
+        all_fastas.append(gc_content)
+    print(all_fastas)
