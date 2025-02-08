@@ -3,12 +3,16 @@
 ##Given: Two DNA strings s and t of equal length (not exceeding 1 kbp).
 ##Return: The Hamming distance dH(s,t)
 
-#draft
-sequence
 
 mutations= 0
 counts= 0
 
+
+with open('/Users/jordynniemiec/Downloads/rosalind_hamm (1).txt', 'r') as file: ##replace file name as necessary
+    sequence_a = file.readline().strip()  # Read the first line and remove whitespace/newline
+    sequence_b = file.readline().strip() # Read the second line and remove whitespace/newline
+
+#for loop to go through the sequences
 for i in range(len(sequence_a)):
   if sequence_a[i] != sequence_b[i]:
       mutations=mutations +1
