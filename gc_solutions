@@ -5,12 +5,41 @@
 ##Given: At most 10 DNA strings in FASTA format (of length at most 1 kbp each).
 ##Return: The ID of the string having the highest GC-content, followed by the GC-content of that string. Rosalind allows for a default error of 0.001 in all decimal answers unless otherwise stated; please see the note on absolute error below.
 
-def gc_content(fastas):
-    all_fastas = []
-    for seq in fastas:
-        gc_content = []
-        for base in seq:
-            if base is 'G' or 'C':
-                gc_content += gc_content
-        all_fastas.append(gc_content)
-    print(all_fastas)
+
+###cleaning up and formatting the fastas to make next steps easier
+def fasta_split(fastas):
+    seq = {}
+    label = ''
+    for line in fastas.strip().split('\n'): #take away the white space and new lines
+        if line.startswith('>'):
+            label = line[1:]
+            seq[label] = ''
+        else:
+            seq[label] += line.strip()
+    return seq
+
+###gc content function to be used later when determining the max
+def gc_content(dnaseq):
+    gc_count = dnaseq.count('G')+dnaseq.count('C')
+    return (gc_count / len(dnaseq)) * 100
+
+
+##finding the highest GC content and output of label
+def highest_gc(fastas):
+    seq = fasta_split(fastas) #making the format readable by the function 
+    max_gc_id = ""
+    max_gc_content = 0
+
+    for seq_id, dnaseq in seq.items():
+        gc = gc_content(dnaseq)
+        if gc > max_gc_content:
+            max_gc_content = gc
+            max_gc_id = seq_id
+
+    print(f"{max_gc_id}\n{max_gc_content}")
+
+with with open('/Users/jordynniemiec/Downloads/rosalind_gc.txt', 'r') as file:
+    fasta_file = file.read()     
+
+#final
+highest_gc(fasta_file)
