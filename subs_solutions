@@ -1,1 +1,19 @@
+#Given: Two DNA strings s and t (each of length at most 1 kbp).
 
+#Return: All locations of t as a substring of s
+
+with open('rosalind_subs.txt', 'r') as file:
+    lines = file.readlines()
+    
+sequence1 = lines[0].strip()
+kmer = lines[1].strip()
+print_kmer = []
+
+for i in range(len(sequence1)):
+    if sequence1[i:i+len(kmer)]== kmer:
+        print_kmer.append(i+1)
+        i += len(kmer)
+    else:
+        i += 1
+
+print(" ".join(map(str, print_kmer)))
