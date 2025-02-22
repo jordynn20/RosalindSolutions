@@ -48,5 +48,5 @@ def protein_string(fastas):
             i += 3
             protein = [code[codon] for codon in codons]
             protein_seq = ''.join(protein)
-        print(protein_seq)
+        print(seq), print(protein_seq)
 
