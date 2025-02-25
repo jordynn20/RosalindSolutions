@@ -1,7 +1,9 @@
+##Given: A DNA string s (of length at most 1 kbp) and a collection of substrings of s acting as introns. All strings are given in FASTA format.
+
+##Return: A protein string resulting from transcribing and translating the exons of s. (Note: Only one solution will exist for the dataset provided.)
 
 
 
-#dictionary for the amino acid code from DNA
 
 code = {
     'TTT': 'F', 'TTC': 'F', 'TTA': 'L', 'TTG': 'L',
@@ -22,10 +24,8 @@ code = {
     'GGT': 'G', 'GGC': 'G', 'GGA': 'G', 'GGG': 'G'
 }
 
-
-
-with open('rosalind_splc (3).txt', 'r') as file:
-    fasta_file = file.read()     
+with open('rosalind_splc (5).txt', 'r') as file:
+    fasta_file = file.read()
 
 def fasta_split(fastas):
     seq = {}
@@ -38,18 +38,28 @@ def fasta_split(fastas):
             seq[label] += line.strip()
     return seq
 
+def remove_introns(dna, introns):
+    for intron in introns:
+        dna = dna.replace(intron, '')
+    return dna
+
+def translate_protein(dna):
+    codons = [dna[i:i+3] for i in range(0, len(dna) - len(dna) % 3, 3)]
+    protein = []
+    for codon in codons:
+        amino_acid = code.get(codon, '')
+        if amino_acid == '':
+            break
+        protein.append(amino_acid)
+    return ''.join(protein)
+
 def protein_string(fastas):
     dna_sequences = fasta_split(fastas)
-    for label, sequence in dna_sequences.items():
-        if sequence.startswith('ATG'):  
-            codons = [sequence[i:i+3] for i in range(0, len(sequence), 3)]
-            protein = []
-            for codon in codons:
-                amino_acid = code.get(codon, '')
-                protein.append(amino_acid)
-                if amino_acid == '':
-                    break
-            protein_seq = ''.join(protein)
-            print(protein_seq)
+    sequences = list(dna_sequences.values())
+    full_dna = sequences[0]  
+    introns = sequences[1:]   
+    exons = remove_introns(full_dna, introns)
+    protein_seq = translate_protein(exons)
+    print(protein_seq)
 
 protein_string(fasta_file)
