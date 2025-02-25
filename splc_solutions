@@ -24,13 +24,13 @@ code = {
 
 
 
-with open('/Users/jordynniemiec/Downloads/rosalind_gc.txt', 'r') as file:
+with open('rosalind_splc (3).txt', 'r') as file:
     fasta_file = file.read()     
 
 def fasta_split(fastas):
     seq = {}
     label = ''
-    for line in fastas.strip().split('\n'): #take away the white space and new lines
+    for line in fastas.strip().split('\n'):
         if line.startswith('>'):
             label = line[1:]
             seq[label] = ''
@@ -38,15 +38,18 @@ def fasta_split(fastas):
             seq[label] += line.strip()
     return seq
 
-def protein_string(fastas): 
-    dna_sequence=fasta_split(fastas)
-    if dna_sequence.startswith('ATG'):
-        codons = []
-        i = 0
-        while i < len(dna_sequence):
-            codons.append(dna_sequence[i:i+3])
-            i += 3
-            protein = [code[codon] for codon in codons]
+def protein_string(fastas):
+    dna_sequences = fasta_split(fastas)
+    for label, sequence in dna_sequences.items():
+        if sequence.startswith('ATG'):  
+            codons = [sequence[i:i+3] for i in range(0, len(sequence), 3)]
+            protein = []
+            for codon in codons:
+                amino_acid = code.get(codon, '')
+                protein.append(amino_acid)
+                if amino_acid == '':
+                    break
             protein_seq = ''.join(protein)
-        print(seq), print(protein_seq)
+            print(protein_seq)
 
+protein_string(fasta_file)
