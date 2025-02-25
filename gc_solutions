@@ -40,7 +40,7 @@ def highest_gc(fastas):
 
     print(f"{max_gc_id}\n{max_gc_content}")
 
-with with open('/Users/jordynniemiec/Downloads/rosalind_gc.txt', 'r') as file:
+with open('/Users/jordynniemiec/Downloads/rosalind_gc.txt', 'r') as file:
     fasta_file = file.read()     
 
 #final
