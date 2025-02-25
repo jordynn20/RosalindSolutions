@@ -1,1 +1,21 @@
+##Given: Two DNA strings s1 and s2 of equal length (at most 1 kbp).
 
+##Return: The transition/transversion ratio R(s1,s2)
+
+with open('/Users/jordynniemiec/Downloads/rosalind_tran.txt', 'r') as file:
+    seq1 = file.readline().strip()
+    seq2 = file.readline().strip()
+
+def t_ratio(seq1, seq2): 
+transitions = 
+  for base in seq1, seq2:
+    if (seq1== 'C' and seq2 == 'T') or (seq1 == 'A' and seq2 == 'G') or (seq1 == 'T' and seq2 == 'C') or (seq1 == 'G' and seq2 == 'A'): 
+      transitions += 1
+transversions =
+  for base in seq1, seq2:
+    if (seq1== 'A' and seq2 == 'C') or (seq1 == 'C' and seq2 == 'A') or (seq1 == 'T' and seq2 == 'A') or (seq1 == 'A' and seq2 == 'T')     or (seq1== 'G' and seq2 == 'C') or (seq1 == 'C' and seq2 == 'G') or (seq1 == 'T' and seq2 == 'G') or (seq1 == 'G' and seq2 == 'T'): 
+      transversions += 1
+ratio = transitions / transversions
+return ratio
+
+t_ratio(seq1, seq2)
