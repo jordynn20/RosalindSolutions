@@ -1,1 +1,53 @@
+###Given: A DNA string s of length at most 1 kbp in FASTA format.
 
+###Return: Every distinct candidate protein string that can be translated from ORFs of s. Strings can be returned in any order.
+
+code = {
+    'TTT': 'F', 'TTC': 'F', 'TTA': 'L', 'TTG': 'L',
+    'CTT': 'L', 'CTC': 'L', 'CTA': 'L', 'CTG': 'L',
+    'ATT': 'I', 'ATC': 'I', 'ATA': 'I', 'ATG': 'M',
+    'GTT': 'V', 'GTC': 'V', 'GTA': 'V', 'GTG': 'V',
+    'TCT': 'S', 'TCC': 'S', 'TCA': 'S', 'TCG': 'S',
+    'CCT': 'P', 'CCC': 'P', 'CCA': 'P', 'CCG': 'P',
+    'ACT': 'T', 'ACC': 'T', 'ACA': 'T', 'ACG': 'T',
+    'GCT': 'A', 'GCC': 'A', 'GCA': 'A', 'GCG': 'A',
+    'TAT': 'Y', 'TAC': 'Y', 'TAA': '.',  'TAG': '.',
+    'CAT': 'H', 'CAC': 'H', 'CAA': 'Q', 'CAG': 'Q',
+    'AAT': 'N', 'AAC': 'N', 'AAA': 'K', 'AAG': 'K',
+    'GAT': 'D', 'GAC': 'D', 'GAA': 'E', 'GAG': 'E',
+    'TGT': 'C', 'TGC': 'C', 'TGA': '.',  'TGG': 'W',
+    'CGT': 'R', 'CGC': 'R', 'CGA': 'R', 'CGG': 'R',
+    'AGT': 'S', 'AGC': 'S', 'AGA': 'R', 'AGG': 'R',
+    'GGT': 'G', 'GGC': 'G', 'GGA': 'G', 'GGG': 'G'
+}
+
+with open('rosalind_orf (1).txt', 'r') as file:
+    file.readline()
+    dna = ''.join([line.strip() for line in file.readlines()])
+
+start_positions = []
+index = 0
+while index < len(dna):
+  index = dna.find('ATG', index)
+  if index != -1:
+      start_positions.append(index)
+      index += 1  
+  else:
+      break
+
+protein_orf = []
+
+for pos in start_positions:
+    protein = ''
+    for i in range(pos, len(dna), 3):
+        codon = dna[i:i+3]
+        if codon in code:
+            amino_acid = code[codon]
+            if amino_acid == '.':
+                break
+            protein += amino_acid
+        else:
+            break
+    protein_orf.append(protein)
+
+print(protein_orf)
