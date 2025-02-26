@@ -2,9 +2,11 @@
 
 ##Return: The transition/transversion ratio R(s1,s2)
 
-with open('/Users/jordynniemiec/Downloads/rosalind_tran.txt', 'r') as file:
-    seq1 = file.readline().strip()
-    seq2 = file.readline().strip()
+with open('rosalind_tran.txt', 'r') as file:
+    seqs = [''.join(s.splitlines()) for s in file.read().split('>')[1:]]  
+
+seq1, seq2 = seqs[0], seqs[1]
+
 
 def t_ratio(seq1, seq2): 
 transitions = 
