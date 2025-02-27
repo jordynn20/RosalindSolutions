@@ -1,1 +1,29 @@
+##Given: A collection of k (k≤100) DNA strings of length at most 1 kbp each in FASTA format.
 
+##Return: A longest common substring of the collection. (If multiple solutions exist, you may return any single solution.)
+
+
+with open('rosalind_lcsm.txt', 'r') as file:
+    dna = file.read()
+
+def parse_fasta(data):
+    sequences, seq = [], ""
+    for line in data.strip().splitlines():
+        if line.startswith('>'):
+            if seq: sequences.append(seq)
+            seq = ""
+        else:
+            seq += line.strip()
+    sequences.append(seq)
+    return sequences
+
+def longest_common_substring(sequences):
+    ref_seq = min(sequences, key=len)
+    for length in range(len(ref_seq), 0, -1):
+        for start in range(len(ref_seq) - length + 1):
+            substr = ref_seq[start:start + length]
+            if all(substr in seq for seq in sequences):
+                return substr
+    return ""
+dna = parse_fasta(dna)
+print(longest_common_substring(dna))
